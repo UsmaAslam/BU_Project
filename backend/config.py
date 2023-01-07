@@ -1,0 +1,6 @@
+DB_IP = 'localhost'
+DB_USER = 'postgres'
+DB_PASSWORD = '12345'
+DATABASE = 'ACMS'
+DB_PORT = '5432'
+SECRET_KEY='ayeshausmaaimanbushra'
