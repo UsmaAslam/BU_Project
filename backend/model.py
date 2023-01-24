@@ -35,7 +35,7 @@ class model:
             try:
                 cursor.execute('select * from public."roadmap"')
                 roadMapList = cursor.fetchall()
-                print(roadMapList)
+                # print(roadMapList)
                 return roadMapList
             except Exception as e:
                 print("Exception in checkUserExist", str(e))
@@ -50,11 +50,11 @@ class model:
         if self.connection != None:
             cursor = self.connection.cursor()
             try:
-                cursor.execute('select * from public."roadmap" where rd_id = {id}')
+                cursor.execute("select * from public.roadmap where rd_id =  %s;",[id["id"]])
                 course = cursor.fetchone()
                 return course
             except Exception as e:
-                print("Exception in checkUserExist", str(e))
+                print("Exception in Fetching Course", str(e))
                 return NULL
             finally:
                 if cursor != None:

@@ -11,7 +11,7 @@ app.config.from_object("config")
 app.secret_key = app.config["SECRET_KEY"]
 CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
-
+id = None
 @app.route('/')
 def starting():
     return render_template("", response=True)
@@ -37,23 +37,32 @@ def set_data():
               app.config["DB_PASSWORD"], app.config["DATABASE"],app.config["DB_PORT"])
     List = m.getRoadMapList()
     print("posting......")
-    print(List)
+    # print(List)
     if List != None:
         return jsonify(List)
     return "'key': 'empty'"
 
-@app.route('/send-data', methods=['POST','GET'])
+@app.route('/send_data', methods=["POST","GET"])
 def send_data():
     course = None
-    data = request.get_json()
+    id = request.get_json()
     m = model(app.config["DB_IP"], app.config["DB_USER"],
             app.config["DB_PASSWORD"], app.config["DATABASE"],app.config["DB_PORT"])
-    course = m.getcourse(data)
+    course = m.getcourse(id)
+    print(course)
     if request.method == "POST":
-        return "Success"
+        return jsonify(course)
     else:
         return jsonify(course)
-
+@app.route('/put_data', methods=["GET"])
+def put_data():
+    course = None
+    id = request.get_json()
+    m = model(app.config["DB_IP"], app.config["DB_USER"],
+            app.config["DB_PASSWORD"], app.config["DATABASE"],app.config["DB_PORT"])
+    course = m.getcourse(id)
+    print(course)
+    return jsonify(course)
 # @app.route('/getDataFromReact',methods=["GET"])
 # def setTime():
 #     if request.method == 'GET':
